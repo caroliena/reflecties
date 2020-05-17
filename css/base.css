@@ -530,6 +530,7 @@ main {
 	float: right;
 	max-height: 200px;
 	max-width: 200px;
+	margin-top: 2rem;
 }
 
 .img-inner--content.self + .content__item-copy {
@@ -565,7 +566,7 @@ main {
 }
 
 .content__item-text {
-	margin: 0;
+	margin: 0 0 1rem 0;
 }
 
 .content__close {

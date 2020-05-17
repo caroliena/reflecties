@@ -346,7 +346,6 @@ main {
 	left: 12rem;
 	transform: perspective(120vh) rotateX(0deg);
 	z-index: 2;
-	top: 7px;
 }
 
 .frame__item:nth-of-type(11) .img-outer {

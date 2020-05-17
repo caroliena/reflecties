@@ -188,18 +188,6 @@ main {
 	width: fit-content;
 }
 
-.draggable {
-	height: 500px;
-	top: calc(50% - 250px);
-	width: 100%;
-	position: absolute;
-	cursor: grab;
-}
-
-.draggable:active {
-	cursor: grabbing;
-}
-
 .frames-outer {
 	width: 100%;
     overflow-x:scroll;
@@ -228,7 +216,7 @@ main {
 	margin-right:3px;
 	position: relative;
 	white-space: nowrap;
-	bottom: 10rem;
+	bottom: -6rem;
 }
 
 

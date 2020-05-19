@@ -41,56 +41,10 @@
     calcWinsize();
     window.addEventListener('resize', calcWinsize);
 
-    let mousepos = {x: winsize.width/2, y: winsize.height/2};
-    window.addEventListener('mousemove', ev => mousepos = getMousePos(ev));
-
-    // Custom cursor
-    class Cursor {
-        constructor(el) {
-            this.DOM = {el: el};
-            this.DOM.circle = this.DOM.el.querySelector('.cursor__inner--circle');
-            this.DOM.arrows = {
-                right: this.DOM.el.querySelector('.cursor__side--right'),
-                left: this.DOM.el.querySelector('.cursor__side--left')
-            };
-            this.bounds = this.DOM.circle.getBoundingClientRect();
-            this.lastMousePos = {x:0, y:0};
-            this.scale = 1;
-            this.lastScale = 1;
-            requestAnimationFrame(() => this.render());
-        }
-        render() {
-            this.lastMousePos.x = MathUtils.lerp(this.lastMousePos.x, mousepos.x - this.bounds.width/2, 0.2);
-            this.lastMousePos.y = MathUtils.lerp(this.lastMousePos.y, mousepos.y - this.bounds.height/2, 0.2);
-            this.lastScale = MathUtils.lerp(this.lastScale, this.scale, 0.15);
-            this.DOM.circle.style.transform = `translateX(${(this.lastMousePos.x)}px) translateY(${this.lastMousePos.y}px) scale(${this.lastScale})`;
-            requestAnimationFrame(() => this.render());
-        }
-        enter() {
-            this.scale = 1.9;
-        }
-        leave() {
-            this.scale = 1;
-        }
-        click() {
-            this.lastScale = .4;
-        }
-        showArrows() {
-            TweenMax.to(Object.values(this.DOM.arrows), 1, {
-                ease: Expo.easeOut,
-                startAt: {x: i => i ? 10 : -10 },
-                opacity: 1,
-                x: 0
-            });
-        }
-        hideArrows() {
-            TweenMax.to(Object.values(this.DOM.arrows), 1, {
-                ease: Expo.easeOut,
-                x: i => i ? 10 : -10,
-                opacity: 0
-            });
-        }
-    }
+    $("html, body, *").mousewheel(function(event, delta) {
+        this.scrollLeft -= delta;
+        event.preventDefault();
+     });
 
     // Strip Item
     class StripItem {
@@ -98,37 +52,6 @@
             this.DOM = {el: el};
             this.DOM.image = this.DOM.el.querySelector('.img-inner');
             this.DOM.number = this.DOM.el.querySelector('.strip__item-link');
-            
-            this.initEvents();
-        }
-        initEvents() {
-            
-            // Hovering the number makes it slide out/in
-            this.DOM.number.addEventListener('mouseenter', () => {
-                const inner = this.DOM.number.querySelector('span');
-                new TimelineMax()
-                .to(inner, 0.2, {
-                    ease: Quad.easeOut,
-                    y: '-100%',
-                    opacity: 0
-                }, 0)
-                .to(inner, 0.5, {
-                    ease: Expo.easeOut,
-                    startAt: {y: '100%', opacity: 0, scale: 1.3},
-                    y: '0%',
-                    opacity: 1
-                }, 0.2)
-            });
-            
-            this.DOM.number.addEventListener('mouseleave', () => {
-                const inner = this.DOM.number.querySelector('span');
-                TweenMax.killTweensOf(inner);
-                TweenMax.set(inner, {
-                    scale: 1,
-                    y: '0%',
-                    opacity: 1
-                });
-            });
         }
     }
 

@@ -37,11 +37,17 @@
     };
 
     let winsize;
+    let mouseFlag = true;
     const calcWinsize = () => winsize = {width: window.innerWidth, height: window.innerHeight};
     calcWinsize();
     window.addEventListener('resize', calcWinsize);
 
-    $("html, body, *").mousewheel(function(event, delta) {
+    $("html, body, *, .frame").mousewheel(function(event, delta) {
+        if(mouseFlag) {
+            window.setTimeout(function(){$(".scroll-instruction").addClass('hide');}, 2000);
+            mouseFlag = false;
+        }
+
         this.scrollLeft -= delta;
         event.preventDefault();
      });
